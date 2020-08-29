@@ -1,10 +1,10 @@
 const fs = require('fs');
 const path = require('path');
+const { default: SlippiGame } = require('@slippi/slippi-js');
 
 
 class Parse {
     constructor(path) {
-        const { default: SlippiGame } = require('@slippi/slippi-js');
         this.game = new SlippiGame(path);
         this.settings = this.game.getSettings();
         this.frames = this.game.getFrames();
@@ -12,7 +12,9 @@ class Parse {
     }
 
     isValid() {
-        return (this.settings.players[0].startStocks == 4 && this.settings.players.length == 2);
+        return (this.settings.players[0].startStocks == 4 &&
+                this.settings.players.length == 2 &&
+                this.settings.isTeams == false);
     }
 
     checkStage(stage) {
@@ -108,22 +110,26 @@ function main() {
     slpList = recFindByExt(`${replayDir}`,'slp')
     console.log(`:: Parsing started on ${replayDir}`)
     for (let i = 0; i<slpList.length; i++) {
-        const parse = new Parse(`${slpList[i]}`);
-        const percent = Math.round(i/slpList.length*100);
-        console.log(`- Testing ${slpList[i]} [${percent}%]`)
+        try {
+            const parse = new Parse(`${slpList[i]}`);
+            const percent = Math.round(i/slpList.length*100);
+            console.log(`- Testing ${slpList[i]} [${percent}%]`)
 
-        if (parse.isValid() &&
-            parse.checkStage(stage) &&
-            parse.checkCharacter(character2.characterId) &&
-            parse.checkCharacterWithColor(character1.characterId, character1.colorId) &&
-            parse.checkLastAttack(lastAttack, parse.findCharacter(character2.characterId)) &&
-            parse.didWin(parse.findCharacter(character2.characterId))) {
+            if (parse.isValid() &&
+                parse.checkStage(stage) &&
+                parse.checkCharacter(character2.characterId) &&
+                parse.checkCharacterWithColor(character1.characterId, character1.colorId) &&
+                parse.checkLastAttack(lastAttack, parse.findCharacter(character2.characterId)) &&
+                parse.didWin(parse.findCharacter(character2.characterId))) {
 
-            console.log("  - Matching criterias !")
-            result++;
-            const mkdirp = require('mkdirp');
-            mkdirp(resultDir);
-            cp(slpList[i], `${resultDir}/result${result}.slp`)
+                console.log("  - Matching criterias !")
+                result++;
+                const mkdirp = require('mkdirp');
+                mkdirp(resultDir);
+                cp(slpList[i], `${resultDir}/result${result}.slp`)
+            }
+        } catch(e) {
+            console.log("   - Error")
         }
     }
 }
