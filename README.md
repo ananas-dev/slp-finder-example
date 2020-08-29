@@ -10,7 +10,7 @@ Find all the replays that are:
 
 ``` sh
 git clone https://github.com/ananas-dev/slp-finder-example
-cd slip-finder-example
+cd slp-finder-example
 npm install
 ```
 
