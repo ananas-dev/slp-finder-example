@@ -11,7 +11,7 @@
   "dependencies": {
     "@slippi/slippi-js": "^5.0.5",
     "mkdirp": "^1.0.4",
-    "cp": "^0.2.0"
+    "cp-file": "^9.0.0"
   },
   "license": "ISC"
 }
