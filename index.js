@@ -126,7 +126,7 @@ function main() {
             result++;
             const mkdirp = require('mkdirp');
             mkdirp(resultDir);
-            fs.rename(slpList[i], `${resultDir}/result${result}.slp`)
+            cp(slpList[i], `${resultDir}/result${result}.slp`)
         }
     }
 }

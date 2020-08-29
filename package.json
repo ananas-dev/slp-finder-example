@@ -1,7 +1,7 @@
 {
-  "name": "smellsbitchy",
+  "name": "slp-finder-example",
   "version": "1.0.0",
-  "description": "Finds game on yoshi against a red sheik that ends with upsmash",
+  "description": "Finds game on yoshi against a red sheik that ends with upsmash by fox",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,7 +9,9 @@
   },
   "author": "Ananas",
   "dependencies": {
-    "@slippi/slippi-js": "^5.0.5"
+    "@slippi/slippi-js": "^5.0.5",
+    "mkdirp": "^1.0.4",
+    "cp": "^0.2.0"
   },
   "license": "ISC"
 }

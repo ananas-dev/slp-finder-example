@@ -3,8 +3,8 @@
 Find all the replays that are:
 + on yoshi's story,
 + with a red sheik,
-+ with fox,
-+ where fox wins by killing sheik using a upsmash
++ with a fox,
++ where fox wins by killing sheik using an upsmash
 
 ## Install
 
