@@ -12,7 +12,7 @@ class Parse {
     }
 
     isValid() {
-        return (this.settings.players[0].startStocks == 4 && this.settings.players.length >= 2);
+        return (this.settings.players[0].startStocks == 4 && this.settings.players.length == 2);
     }
 
     checkStage(stage) {
@@ -21,7 +21,7 @@ class Parse {
 
 
     checkCharacter(character) {
-        for (let i=0;i<=1;i++) {
+        for (let i=0;i<this.settings.players.length;i++) {
             const player = this.settings.players[i];
             if (character == player.characterId) {
                 return true
@@ -30,7 +30,7 @@ class Parse {
     }
 
     checkCharacterWithColor(character, color) {
-        for (let i=0;i<=1;i++) {
+        for (let i=0;i<this.settings.players.length;i++) {
             const player = this.settings.players[i];
             if (character == player.characterId &&
                 color == player.characterColor) {
@@ -40,7 +40,7 @@ class Parse {
     }
 
     findCharacter(character) {
-        for (let i=0;i<=1;i++) {
+        for (let i=0;i<this.settings.players.length;i++) {
             const player = this.settings.players[i];
             if (character == player.characterId) {
                 return i
@@ -50,7 +50,7 @@ class Parse {
 
 
     findCharacterWithColor(character, color) {
-        for (let i=0;i<=1;i++) {
+        for (let i=0;i<this.settings.players.length;i++) {
             const player = this.settings.players[i];
             if (character == player.characterId &&
                 color == player.characterColor) {
@@ -60,7 +60,8 @@ class Parse {
     }
 
     checkLastAttack(lastAttack, playerIndex) {
-        return (lastAttack == this.frames[this.stats.lastFrame].players[playerIndex].post.lastAttackLanded);
+        return (lastAttack ==
+                this.frames[this.stats.lastFrame].players[this.settings.players[playerIndex].port - 1].post.lastAttackLanded);
     }
 
     didWin(playerIndex) {
@@ -68,22 +69,18 @@ class Parse {
     }
 }
 
-function recFindByExt(base,ext,files,result)
-{
+function recFindByExt(base,ext,files,result) {
     files = files || fs.readdirSync(base)
     result = result || []
 
     files.forEach(
         function (file) {
             var newbase = path.join(base,file)
-            if ( fs.statSync(newbase).isDirectory() )
-            {
+            if ( fs.statSync(newbase).isDirectory() ) {
                 result = recFindByExt(newbase,ext,fs.readdirSync(newbase),result)
             }
-            else
-            {
-                if ( file.substr(-1*(ext.length+1)) == '.' + ext )
-                {
+            else {
+                if ( file.substr(-1*(ext.length+1)) == '.' + ext ) {
                     result.push(newbase)
                 }
             }
@@ -113,7 +110,7 @@ function main() {
     for (let i = 0; i<slpList.length; i++) {
         const parse = new Parse(`${slpList[i]}`);
         const percent = Math.round(i/slpList.length*100);
-        console.log(`Testing ${slpList[i]} [${percent}%]`)
+        console.log(`- Testing ${slpList[i]} [${percent}%]`)
 
         if (parse.isValid() &&
             parse.checkStage(stage) &&
