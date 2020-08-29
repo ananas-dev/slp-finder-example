@@ -119,8 +119,8 @@ function main() {
             parse.checkStage(stage) &&
             parse.checkCharacter(character2.characterId) &&
             parse.checkCharacterWithColor(character1.characterId, character1.colorId) &&
-            parse.checkLastAttack(lastAttack, findCharacter(character2.characterId)) &&
-            parse.didWin(character2.characterId)) {
+            parse.checkLastAttack(lastAttack, parse.findCharacter(character2.characterId)) &&
+            parse.didWin(parse.findCharacter(character2.characterId))) {
 
             console.log("  - Matching criterias !")
             result++;
